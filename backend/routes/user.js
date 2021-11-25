@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const db = require('../models');
+const userCtrl = require("../controller/user")
 
-router.post('/new', (req, res) =>{
-    db.User.create({
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        avatar: req.body.avatar
-    }).then(newUser => res.send(newUser));
-})
+//  Middleware 
+const multer = require("../middleware/multer")
+
+router.post("/signup", multer, userCtrl.signup);
+router.post("/login", userCtrl.login);
+router.put("/:id", multer, userCtrl.updateUser);
+router.delete("/:id", userCtrl.deleteUser);
+router.get("/:id", userCtrl.getOneUser);
+router.get("/", userCtrl.getAllUsers);
 
 module.exports = router;
