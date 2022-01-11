@@ -2,20 +2,27 @@
   <nav class="header">
     <div class="logo">
     </div>
-    <div class="nav">
-      <router-link to="/">
+    <!-- <div class="nav">
+      <router-link to="/" v-if="isLogged">
         <h3>Accueil</h3>
+      </router-link>
+      <router-link to="/profile">
+        <h3>Postez un message</h3>
       </router-link>
       <router-link to="/profile">
         <h3>Profil</h3>
       </router-link>
-    </div>
+    </div> -->
   </nav>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'Header'
+  name: 'Header',
+  computed: mapState([
+    'isLogged'
+  ])
 }
 </script>
 
@@ -24,13 +31,14 @@ export default {
 
 .header {
   grid-area: header;
+  height: 10vh;
   background-color: #339966;
-  padding: 30px 0;
+  /* padding: 40px 0; */
   box-shadow: 0px 10px 13px -7px #000000;
 }
 .logo {
   width:40%;
-  height: 60%;
+  height: 80%;
   background-image: url("../assets/icon-left-font-monochrome-white.png");
   background-position: center;
   background-size: 40%;
@@ -43,15 +51,19 @@ export default {
     width: 100%;
   }
   .logo {
+    width: 60%;
     background-size: 100%;
+  }
+  h3 {
+    font-size: 1em;
   }
 }
 
-.nav {
+/* .nav {
   display: flex;
   justify-content: space-around;
 
-}
+} */
 a {
   color: white;
   text-decoration: none;
