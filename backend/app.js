@@ -22,22 +22,19 @@ app.use('/images', express.static(path.join(__dirname, "images")));
 
 const userRoutes = require("./routes/user");
 const messageRoutes = require("./routes/message");
+const commentRoutes = require("./routes/comment");
 
 // Utilisation des Routes 
 // ============================================================================
 
 app.use('/api/users', userRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/comments', commentRoutes);
 
 //Synchronisation avec la Base donnée
 // ============================================================================
 
-db.sequelize.sync({force: true})
-.then(_ => {
-    bcrypt.hash(`${process.env.ADMIN_PASS}`, 10)
-    .then(hash => db.User.create({ username: "Admin", password: hash, email: "admin@admin.com", admin: true }))
-    .then(user => console.log(user.toJSON()))
-})
+db.sequelize.sync({ force: false })
 
 // Exportation App.js
 // ============================================================================

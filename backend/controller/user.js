@@ -12,6 +12,16 @@ exports.signup = (req, res, next) => {
     if(req.file) {
         avatarImg = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
     }
+    if(db.User.length === 0){
+        bcrypt.hash(`${process.env.ADMIN_PASS}`, 10)
+        .then(hash => db.User.create({ 
+            username: "Admin", 
+            password: hash,
+            email: "admin@admin.com",
+             admin: true }))
+        .then(user => console.log(user.toJSON()))
+    }
+    
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new db.User({
@@ -35,6 +45,7 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
     db.User.findOne({ where: { email: req.body.email } })
         .then(user => {
+            console.log(user)
             if (!user) {
                 return res.status(401).json({ error: "Utilisateur non trouvé !" })
             }
@@ -49,7 +60,7 @@ exports.login = (req, res, next) => {
                         username: user.username,
                         avatar: user.avatar,
                         token: jwt.sign(
-                            { userId: user._id },
+                            { userId: user.id },
                             `${process.env.TOKEN}`,
                             { expiresIn: "24h" }
                         )
@@ -63,16 +74,38 @@ exports.login = (req, res, next) => {
 // Modifier utilisateur PUT/updateUser
 // ============================================================================
 
-
 exports.updateUser = (req, res, next) => {
-    const userObject = req.file ?
-        {
-            ...req.body,
-            avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...req.body };
-    db.User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
-        .then(() => res.status(200).json({ message: 'Utilisateur Modifié !' }))
-        .catch(error => res.status(400).json({ error }));
+    db.User.findByPk(req.params.id)
+    .then(user => {
+        if (user.avatar !== `http://${process.env.HOST}/images/default_user.png`) {
+            const filename = user.avatar.split("/images/")[1];
+            fs.unlink(`images/${filename}`, () => {
+                const userObject = req.file ?
+                {
+                    ...req.body,
+                    avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                } : { ... req.body };
+                db.User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
+                .then(_ => {
+                    const message = `L'Utilisateur a bien été modifié.`;
+                    res.status(200).json({ message })
+                })
+                .catch(error => res.status(400).json({ error }));
+            })
+        } else {
+            const userObject = req.file ?
+                {
+                    ...req.body,
+                    avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                } : { ... req.body };
+                db.User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
+                .then(_ => {
+                    const message = `L'Utilisateur a bien été modifié.`;
+                    res.status(200).json({ message })
+                })
+                .catch(error => res.status(400).json({ error }));
+        }
+    })
 };
 
 //   Supprimer Utilisateur DELETE/deleteUser

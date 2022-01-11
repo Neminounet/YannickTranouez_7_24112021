@@ -11,9 +11,12 @@ const auth = require("../middleware/auth");
 // Les Routes 
 // ============================================================================
 
-router.post("/new", auth, multer, messageCtrl.createMessage);
+router.post("/", auth, multer, messageCtrl.createMessage);
 router.put("/:id", auth, multer, messageCtrl.updateMessage);
 router.delete("/:id", auth, messageCtrl.deleteMessage);
+router.get("/", auth, messageCtrl.getAllMessages);
+
+
 
 // Exportation
 // ============================================================================
