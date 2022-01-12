@@ -8,35 +8,45 @@ const fs = require("fs");
 // ============================================================================
 
 exports.signup = (req, res, next) => {
+    db.User.findAll()
+    .then(res =>{
+        if(res.length == 0){
+            bcrypt.hash(`${process.env.ADMIN_PASS}`, 10)
+            .then(hash => db.User.create({ 
+                username: "Admin", 
+                password: hash,
+                email: "admin@admin.com",
+                 admin: true }))
+            .then(user => console.log(user.toJSON()))
+        }
+    })
+    
     let avatarImg;
     if(req.file) {
         avatarImg = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
     }
-    if(db.User.length === 0){
-        bcrypt.hash(`${process.env.ADMIN_PASS}`, 10)
-        .then(hash => db.User.create({ 
-            username: "Admin", 
-            password: hash,
-            email: "admin@admin.com",
-             admin: true }))
-        .then(user => console.log(user.toJSON()))
-    }
-    
-    bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-            const user = new db.User({
-                username: req.body.username,
-                email: req.body.email,
-                password: hash,
-                avatar: avatarImg
-            });
-            user.save()
-                .then(()=> res.status(201).json({ message: "utilisateur Créé" }))
-                .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
+    db.User.findOne({ where: { email: req.body.email } })
+    .then(user => {
+        if(!user) {
+            bcrypt.hash(req.body.password, 10)
+                .then(hash => {
+                    const user = new db.User({
+                        username: req.body.username,
+                        email: req.body.email,
+                        password: hash,
+                        avatar: avatarImg
+                    });
+                    user.save()
+                        .then(()=> res.status(201).json({ message: "utilisateur Créé" }))
+                        .catch(error => res.status(400).json({ error }));
+                })
+                .catch(error => res.status(500).json({ error }));
+        } else {
+            return res.status(404).json({ error: 'Cette adresse mail est déjà utilisée !' })
+        }
+    })
+    .catch(error => res.status(500).json({ error}));
 }
-
 
 // Login d'un Utilisateur POST/login
 // ============================================================================

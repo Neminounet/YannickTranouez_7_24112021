@@ -26,9 +26,9 @@
                         <li>
                             <a href="">(0) Commentaires</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="">Modifier</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="">supprimer</a>
                         </li>
@@ -51,9 +51,9 @@
                         <li>
                             <a href="">(0) Commentaires</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="">Modifier</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="">supprimer</a>
                         </li>
@@ -76,9 +76,9 @@
                         <li>
                             <a href="">(0) Commentaires</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="">Modifier</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="">supprimer</a>
                         </li>
@@ -141,7 +141,7 @@ margin-top: 20px;
     color: white;
     font-weight: bold;
     box-shadow: 0px 10px 13px -7px #000000;
-    transition: transform 0.5s;
+    /* transition: transform 0.5s; */
     cursor: pointer;
 }
 
