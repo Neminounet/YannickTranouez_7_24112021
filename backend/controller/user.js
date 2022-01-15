@@ -69,6 +69,7 @@ exports.login = (req, res, next) => {
                         userId: user.id,
                         username: user.username,
                         avatar: user.avatar,
+                        admin: user.admin,
                         token: jwt.sign(
                             { userId: user.id },
                             `${process.env.TOKEN}`,

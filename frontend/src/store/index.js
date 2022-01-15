@@ -1,25 +1,29 @@
 import { createStore } from 'vuex'
+// import axios from "axios"
+
 
 export default createStore({
   state: {
     isLogged: false,
-    newUser: {
-      username: '',
-      password: '',
-      cPassword: '',
-      email: '',
-      image: ''
-    }
+    isAdmin: false,
+    messages: JSON.parse(localStorage.getItem("messages")),
+    currentUser: JSON.parse(localStorage.getItem("user"))
   },
   mutations: {
-    // loginUser(state) {
-    //   state.isLogged = true;
-    // }
+    connectedUser(state) {
+      state.isLogged = true;
+    },
+    notConnectedUser(state) {
+      state.isLogged = false;
+    }
   },
   actions: {
-    // loginUser({ commit }){
-    //   commit('loginUser')
-    // }
+    connectedUser({ commit }){
+      commit('connectedUser')
+    },
+    notConnectedUser({ commit }) {
+      commit('notConnectedUser')
+    }
   },
   modules: {
   }

@@ -1,105 +1,84 @@
 <template>
     <div class="main">
         <section class="pres">
-            <div class="pres-image" style="background-image: url('https://images.unsplash.com/photo-1637580979689-fa99141d600f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80');"></div>
+            <div class="pres-image" :style="{backgroundImage: 'url('+ this.currentUser.avatar +')'}"></div>
             <div class="pres-info">
-                <h3>Bienvenue Emile !</h3>
-                <button class="btn">Poster un message</button>
-                <button class="btn">Page de Profil</button>
-                <button class="btn">Se déconnecter</button>
+                <h3>Bienvenue {{ this.currentUser.username }}</h3>
+                <PostMessage />
             </div>
         </section>
         <section class="fil">
-            <article class="post">
-                <div class="post-head">
-                    <h4 class="post-pseudo">Francis</h4>
-                    <p class="post-time">Posté le 11/01/2022 à 16H39</p>
-                    <div class="post-avatar" style="background-image: url(https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80);"></div>
-                </div>
-                <div class="post-body">
-                    <div class="post-image" style="background-image: url(https://images.unsplash.com/photo-1641392924934-17fd6c260a24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=712&q=80);"></div>
-                    <div class="post-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab laudantium soluta, quidem dolore incidunt eligendi repellat sed consequuntur quaerat tempora? Ipsam ducimus reprehenderit iure ipsum nulla quia sint qui! Voluptatem?
+            <h2 v-if="messages.length == 0">Aucun Message</h2>
+            <template v-if="messages.length > 0">
+                <article  class="post" v-for="(message, index) in this.messages" :key="index">
+                    <div class="post-head">
+                        <h4 class="post-pseudo">{{ message.User.username }}</h4>
+                        <p class="post-time">Posté le {{ message.createdAt }} </p>
+                        <div class="post-avatar" :style="{backgroundImage: 'url('+ message.User.avatar +')'}"></div>
                     </div>
-                </div>
-                <div class="post-footer">
-                    <ul>
-                        <li>
-                            <a href="">(0) Commentaires</a>
-                        </li>
-                        <!-- <li>
-                            <a href="">Modifier</a>
-                        </li> -->
-                        <li>
-                            <a href="">supprimer</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
-             <article class="post">
-                <div class="post-head">
-                    <h4 class="post-pseudo">Francis</h4>
-                    <p class="post-time">Posté le 11/01/2022 à 16H39</p>
-                    <div class="post-avatar" style="background-image: url(https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80);"></div>
-                </div>
-                <div class="post-body">
-                    <div class="post-image" style="background-image: url(https://images.unsplash.com/photo-1641392924934-17fd6c260a24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=712&q=80);"></div>
-                    <div class="post-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab laudantium soluta, quidem dolore incidunt eligendi repellat sed consequuntur quaerat tempora? Ipsam ducimus reprehenderit iure ipsum nulla quia sint qui! Voluptatem?
+                    <div class="post-body">
+                        <div v-if="message.image !== null" class="post-image" :style="{backgroundImage: 'url('+ message.image +')'}"></div>
+                        <div class="post-text"> {{ message.text }}
+                        </div>
                     </div>
-                </div>
-                <div class="post-footer">
-                    <ul>
-                        <li>
-                            <a href="">(0) Commentaires</a>
-                        </li>
-                        <!-- <li>
-                            <a href="">Modifier</a>
-                        </li> -->
-                        <li>
-                            <a href="">supprimer</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
-             <article class="post">
-                <div class="post-head">
-                    <h4 class="post-pseudo">Francis</h4>
-                    <p class="post-time">Posté le 11/01/2022 à 16H39</p>
-                    <div class="post-avatar" style="background-image: url(https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80);"></div>
-                </div>
-                <div class="post-body">
-                    <div class="post-image" style="background-image: url(https://images.unsplash.com/photo-1641392924934-17fd6c260a24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=712&q=80);"></div>
-                    <div class="post-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab laudantium soluta, quidem dolore incidunt eligendi repellat sed consequuntur quaerat tempora? Ipsam ducimus reprehenderit iure ipsum nulla quia sint qui! Voluptatem?
+                    <div class="post-footer">
+                        <ul>
+                            <li>
+                                <a href="">(0) Commentaires</a>
+                            </li>
+                            <!-- <li>
+                                <a href="">Modifier</a>
+                            </li> -->
+                            <li>
+                                <a v-if="currentUser.admin === true" href="">supprimer</a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="post-footer">
-                    <ul>
-                        <li>
-                            <a href="">(0) Commentaires</a>
-                        </li>
-                        <!-- <li>
-                            <a href="">Modifier</a>
-                        </li> -->
-                        <li>
-                            <a href="">supprimer</a>
-                        </li>
-                    </ul>
-                </div>
-            </article>
+                </article>
+            </template>
         </section>
     </div>
 </template>
 
 <script>
+import PostMessage from './PostMessage.vue'
+import { mapState } from "vuex";
+import axios from "axios";
+
 export default {
-    name: 'Main'
+    name: 'Main',
+    components: {
+        PostMessage
+    },
+     computed: mapState ([
+    'isLogged',
+    'messages',
+    'currentUser'
+  ]),
+  created(){
+    axios.get('http://localhost:3000/api/messages/', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.currentUser.token
+        }
+      })
+      .then(res =>{
+        localStorage.setItem('messages', JSON.stringify(res.data))
+      })
+      .catch((error) => {
+              alert(error.response.data.error);
+        });
+    }
 }
 </script>
 
 <style scoped>
+
 /* Paramètres généraux */
 
 .main {
     grid-area: main;
+    width: 100vw;
     color:darkslategray;
     display: flex;
     justify-content: space-evenly;
@@ -109,18 +88,18 @@ export default {
 
 .pres {
 background-color:whitesmoke;
-width: 35%;
+width: 40%;
 height: 35vh;
 display: flex;
-justify-content: space-evenly;
+justify-content: space-around;
 border-radius: 10px;
 box-shadow: 0px 10px 13px -7px #000000;
 margin-top: 20px;
 }
 
 .pres-image {
- width: 200px;
- height: 200px;
+ width: 150px;
+ height: 150px;
  background-position: center;
  background-size: cover;
  margin: auto 0;
@@ -129,9 +108,13 @@ margin-top: 20px;
 }
 
 .pres-info {
+    width: 60%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+}
+
+.pres-info h3 {
+    margin-bottom: 5px;
 }
 
 .btn {
@@ -141,7 +124,6 @@ margin-top: 20px;
     color: white;
     font-weight: bold;
     box-shadow: 0px 10px 13px -7px #000000;
-    /* transition: transform 0.5s; */
     cursor: pointer;
 }
 
@@ -167,7 +149,7 @@ margin-top: 20px;
 /* Fil d'acutalité */
 
 .fil {
-    width: 60%;
+    width: 50%;
     margin-bottom: 20px;
 }
 
@@ -198,7 +180,10 @@ margin-top: 20px;
     padding: 20px;
     border-bottom: 1px solid darkslategray;
     display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 .post-image {
     width: 30vw;
@@ -206,6 +191,7 @@ margin-top: 20px;
     background-position: center;
     background-size: cover;
     border-radius: 10px;
+    margin: 20px;
 }
 
 .post-footer {
@@ -220,11 +206,12 @@ margin-top: 20px;
 
 .post-footer ul {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .post-footer li {
     list-style: none;
+    margin: 0 10px;
 }
 
 /* Media Queries */
@@ -236,7 +223,7 @@ margin-top: 20px;
     }
 
     .pres {
-        width: 90%;
+        width: 85%;
         height: auto;
         flex-direction: column;
         justify-content: space-between;
@@ -248,6 +235,10 @@ margin-top: 20px;
         height: 80px;
         margin: 10px 0 ;
     }
+
+    .pres-info {
+        width: 90%;
+    }
     .pres-info h3 {
         margin: 0;
     }
@@ -257,7 +248,7 @@ margin-top: 20px;
     }
 
     .fil {
-        width: 90%;
+        width: 85%;
     }
 
     .post-head, .post-body, .post-footer ul{

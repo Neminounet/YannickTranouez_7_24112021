@@ -2,17 +2,17 @@
   <nav class="header">
     <div class="logo">
     </div>
-    <!-- <div class="nav">
+    <div class="nav">
       <router-link to="/" v-if="isLogged">
         <h3>Accueil</h3>
       </router-link>
-      <router-link to="/profile">
-        <h3>Postez un message</h3>
-      </router-link>
-      <router-link to="/profile">
+      <router-link to="/profile" v-if="isLogged">
         <h3>Profil</h3>
       </router-link>
-    </div> -->
+      <router-link to="/" v-if="isLogged" @click.prevent="logout()">
+        <h3>Déconnexion</h3>
+      </router-link>
+    </div>
   </nav>
 </template>
 
@@ -22,7 +22,13 @@ export default {
   name: 'Header',
   computed: mapState([
     'isLogged'
-  ])
+  ]),
+  methods: {
+    logout(){
+      localStorage.removeItem("user");
+      location.reload();
+    }
+  }
 }
 </script>
 
@@ -31,9 +37,11 @@ export default {
 
 .header {
   grid-area: header;
-  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 15vh;
   background-color: #339966;
-  /* padding: 40px 0; */
   box-shadow: 0px 10px 13px -7px #000000;
 }
 .logo {
@@ -43,7 +51,6 @@ export default {
   background-position: center;
   background-size: 40%;
   background-repeat: no-repeat;
-  margin: auto;
 }
 
 @media (max-width: 991.98px) {
@@ -59,11 +66,15 @@ export default {
   }
 }
 
-/* .nav {
+.nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+}
 
-} */
+.nav h3 {
+padding: 0 10px;
+}
+
 a {
   color: white;
   text-decoration: none;
