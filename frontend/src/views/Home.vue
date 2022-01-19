@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Connexion v-if="!isLogged" />
-    <Main v-else />
+    <Main v-else/>
   </div>
 </template>
 
@@ -18,22 +18,22 @@ export default {
   },
   computed: mapState([
     "isLogged",
-    "currentUser"
+    "currentUser",
   ]),
-  methods: {
-    connected(){
-       if (this.currentUser !== null) {
-      console.log("ouiii")
-      this.$store.dispatch("connectedUser");
-      } else {
-      console.log("nooonnn")
-      this.$store.dispatch("notConnectedUser");
-      }
-    }
-  },
-  created() {
-   this.connected();
-  }
+  // methods: {
+  //   connected(){
+  //      if (localStorage.user !== undefined) {
+  //     console.log("ouiii")
+  //     this.$store.dispatch("connectedUser");
+  //     } else {
+  //     console.log("nooonnn")
+  //     this.$store.dispatch("notConnectedUser");
+  //     }
+  //   }
+  // },
+  // created() {
+  //  this.connected();
+  // }
 };
 </script>
 

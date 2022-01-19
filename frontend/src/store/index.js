@@ -1,15 +1,12 @@
 import { createStore } from 'vuex'
-// import axios from "axios"
-
 
 export default createStore({
   state: {
     isLogged: false,
-    isAdmin: false,
-    messages: JSON.parse(localStorage.getItem("messages")),
     currentUser: JSON.parse(localStorage.getItem("user"))
   },
   mutations: {
+    // 1) Connection de l'utilisateur
     connectedUser(state) {
       state.isLogged = true;
     },
@@ -18,6 +15,7 @@ export default createStore({
     }
   },
   actions: {
+    // 1) Connection de l'utilisateur
     connectedUser({ commit }){
       commit('connectedUser')
     },

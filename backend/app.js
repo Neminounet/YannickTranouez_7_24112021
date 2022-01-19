@@ -34,7 +34,7 @@ app.use('/api/comments', commentRoutes);
 //Synchronisation avec la Base donnée
 // ============================================================================
 
-db.sequelize.sync({force: false})
+db.sequelize.sync({ force: false })
 
 // Exportation App.js
 // ============================================================================

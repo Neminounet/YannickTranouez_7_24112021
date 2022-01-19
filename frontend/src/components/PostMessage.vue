@@ -22,6 +22,7 @@
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
+import Swal from "sweetalert2"
 
 
 export default {
@@ -53,7 +54,15 @@ export default {
             })
             .then(res =>{
                 console.log(res)
-                location.reload();
+                Swal.fire({
+                    text: "Message envoyé !",
+                    footer: "Redirection en cours...",
+                    icon: "success",
+                    timer: 1000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    willClose: () => { location.reload() }
+                })
             })
             .catch((error) => {
               alert(error.response.data.error);

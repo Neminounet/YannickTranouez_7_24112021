@@ -1,3 +1,12 @@
 <template>
-    <div>Post ton message pas beau !</div>
+    <div>hello !!</div>
 </template>
+
+<script>
+export default {
+}
+</script>
+
+<style>
+
+</style>

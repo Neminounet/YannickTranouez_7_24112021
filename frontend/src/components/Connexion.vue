@@ -78,6 +78,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2"
 import { mapState } from "vuex";
 
 export default {
@@ -155,7 +156,15 @@ export default {
         .then(res =>{
             console.log(res);
             localStorage.setItem('user', JSON.stringify(res.data));
-            location.reload()
+            Swal.fire({
+                    text: "Connexion réussie !",
+                    footer: "Redirection en cours...",
+                    icon: "success",
+                    timer: 1000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    willClose: () => { location.reload() }
+                })
         })
         .catch(error =>{
             alert(error.response.data.error)

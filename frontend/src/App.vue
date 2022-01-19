@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 
@@ -13,6 +14,21 @@ export default {
   components: {
     Header,
     Footer
+  },
+  computed: mapState([
+    'isLogged'
+  ]),
+  methods: {
+    connected(){
+       if (localStorage.user !== undefined) {
+      this.$store.dispatch("connectedUser");
+      } else {
+      this.$store.dispatch("notConnectedUser");
+      }
+    }
+  },
+  created() {
+    this.connected();
   }
 }
 </script>

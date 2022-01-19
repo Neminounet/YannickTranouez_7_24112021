@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import Post from '../views/Post.vue'
 
+
 const routes = [
   {
     path: '/',
@@ -15,10 +16,10 @@ const routes = [
     component: Profile
   },
   {
-    path: '/post',
+    path: '/post/:id',
     name: 'Post',
     component: Post
-  }
+  },
 ]
 
 const router = createRouter({
