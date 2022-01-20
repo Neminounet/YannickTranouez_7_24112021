@@ -17,8 +17,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         avatar: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
             defaultValue: `http://${process.env.HOST}/images/default_user.png`
+        },
+        bio: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         admin: {
             type: DataTypes.BOOLEAN,

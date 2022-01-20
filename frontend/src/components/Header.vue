@@ -25,7 +25,7 @@ export default {
   ]),
   methods: {
     logout(){
-      localStorage.removeItem("user");
+      localStorage.removeItem("connectedUser");
       location.reload();
     }
   }

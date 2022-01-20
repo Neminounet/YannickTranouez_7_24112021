@@ -10,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
         Comment.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
-            }
+            },
+            onDelete: "cascade"
         });
         Comment.belongsTo(models.Message, {
             foreignKey: {
                 allowNull: false
-            }
+            },
+            onDelete: "cascade"
         });
     };
 

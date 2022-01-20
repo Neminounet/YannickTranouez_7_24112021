@@ -46,12 +46,13 @@
               required="required"
             /><br />
 
-            <label for="favatar">Photo de profil (Facultatif) :</label><br />
+            <label for="favatar">Photo de profil :</label><br />
             <input
               type="file"
               id="favatar"
               name="favatar"
               @change="fileSelected"
+              required="required"
             /><br />
 
             <button @click.prevent="createUser()">S'inscrire</button>
@@ -114,7 +115,8 @@ export default {
         regexName.test(this.newUser.username) &&
         regexName.test(this.newUser.email) &&
         regexName.test(this.newUser.password) &&
-        regexName.test(this.newUser.cPassword)
+        regexName.test(this.newUser.cPassword) &&
+        this.newUser.image
       ) {
         if (this.newUser.password === this.newUser.cPassword) {
           const formData = new FormData();
@@ -146,7 +148,7 @@ export default {
         }
       } else {
         alert(
-          "Veuillez remplir tous les formulaires ! Votre nom doit contenir au moins 5 lettres/chiffres et ne doit pas contenir de caractères speciaux, idem pour le password"
+          "Veuillez remplir tous les formulaires correctement // la photo de profil est obligatoire  "
         );
       }
     },
@@ -155,7 +157,7 @@ export default {
         axios.post('http://localhost:3000/api/users/login', { email: this.user.email, password: this.user.password })
         .then(res =>{
             console.log(res);
-            localStorage.setItem('user', JSON.stringify(res.data));
+            localStorage.setItem('connectedUser', JSON.stringify(res.data));
             Swal.fire({
                     text: "Connexion réussie !",
                     footer: "Redirection en cours...",

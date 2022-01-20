@@ -20,7 +20,7 @@ export default {
   ]),
   methods: {
     connected(){
-       if (localStorage.user !== undefined) {
+       if (localStorage.connectedUser !== undefined) {
       this.$store.dispatch("connectedUser");
       } else {
       this.$store.dispatch("notConnectedUser");

@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     isLogged: false,
-    currentUser: JSON.parse(localStorage.getItem("user"))
+    currentUser: JSON.parse(localStorage.getItem("connectedUser"))
   },
   mutations: {
     // 1) Connection de l'utilisateur

@@ -3,10 +3,10 @@
     <section class="pres">
       <div
         class="pres-image"
-        :style="{ backgroundImage: 'url(' + this.currentUser.avatar + ')' }"
+        :style="{ backgroundImage: 'url(' + this.user.avatar + ')' }"
       ></div>
       <div class="pres-info">
-        <h3>Bienvenue {{ this.currentUser.username }}</h3>
+        <h3>Bienvenue {{ this.user.username }}</h3>
         <PostMessage />
       </div>
     </section>
@@ -67,7 +67,8 @@ export default {
   },
   data(){
       return {
-          messages: []
+          messages: [],
+          user: {}
       }
   },
   computed: mapState(["currentUser"]),
@@ -114,11 +115,27 @@ export default {
       .catch((error) => {
         console.log(error.response.data.error);
       })
+    },
+
+    getUser() {
+      const userId = this.currentUser.userId
+      axios.get(`http://localhost:3000/api/users/${userId}`, {
+        headers: {
+        Authorization: "Bearer " + this.currentUser.token,
+        },
+      })
+      .then(res => {
+        this.user = res.data
+      })
+      .catch((error) => {
+      console.log(error.response.data.error);
+      });
     }
 
   },
   created() {
-      this.getAllPosts()
+      this.getUser();
+      this.getAllPosts();
   }
 };
 </script>

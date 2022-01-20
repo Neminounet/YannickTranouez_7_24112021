@@ -88,7 +88,7 @@ exports.login = (req, res, next) => {
 exports.updateUser = (req, res, next) => {
     db.User.findByPk(req.params.id)
     .then(user => {
-        if (user.avatar !== `http://${process.env.HOST}/images/default_user.png`) {
+        if (req.file) {
             const filename = user.avatar.split("/images/")[1];
             fs.unlink(`images/${filename}`, () => {
                 const userObject = req.file ?
@@ -103,18 +103,31 @@ exports.updateUser = (req, res, next) => {
                 })
                 .catch(error => res.status(400).json({ error }));
             })
-        } else {
-            const userObject = req.file ?
-                {
-                    ...req.body,
-                    avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-                } : { ... req.body };
-                db.User.update({ ...userObject, id: req.params.id }, { where: { id: req.params.id } })
-                .then(_ => {
-                    const message = `L'Utilisateur a bien été modifié.`;
+        } else if (req.body.password != undefined){
+            bcrypt.hash(req.body.password, 10)
+            .then((hash) => {
+                db.User.update({
+                    username: req.body.username,
+                    password: hash,
+                    email: req.body.email,
+                    bio: req.body.bio
+                }, {where: {id: req.params.id}})
+                .then(()=>{
+                    const message = "L'utilisateur a bien été modifié";
                     res.status(200).json({ message })
                 })
                 .catch(error => res.status(400).json({ error }));
+            })
+
+        } else {
+            db.User.update({
+                ...req.body
+            },{where: {id: req.params.id}})
+            .then(()=>{
+                const message = "L'utilisateur a bien été modifié";
+                res.status(200).json({ message })
+            })
+            .catch(error => res.status(400).json({ error }));
         }
     })
 };

@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         Message.belongsTo(models.User, {
             foreignKey: {
                 allowNull: false
-            }
+            },
+            onDelete: "cascade"
         });
         Message.hasMany(models.Comment, {
             onDelete: "cascade"
