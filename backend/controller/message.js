@@ -31,20 +31,44 @@ exports.createMessage = (req, res, next) => {
 exports.updateMessage = (req, res, next) => {
     db.Message.findByPk(req.params.id)
         .then(msg => {
-            const filename = msg.image.split("/images/")[1];
-            fs.unlink(`images/${filename}`, () => {
-                const messageObject = req.file ?
-                    {
-                        ...req.body,
-                        image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-                    } : { ...req.body };
-                db.Message.update({ ...messageObject, id: req.params.id }, { where: { id: req.params.id } })
-                    .then(_ => {
-                        const message = `Le message a bien été modifié.`;
+            if (req.file) {
+                if (msg.image !== null) {
+                    const filename = msg.image.split("/images/")[1];
+                    fs.unlink(`images/${filename}`, () => {
+                        const messageObject = req.file ?
+                            {
+                                ...req.body,
+                                image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                            } : { ...req.body };
+                        db.Message.update({ ...messageObject, id: req.params.id }, { where: { id: req.params.id } })
+                            .then(_ => {
+                                const message = `Le message a bien été modifié.`;
+                                res.status(200).json({ message })
+                            })
+                            .catch(error => res.status(400).json({ error }));
+                    })
+                } else {
+                    messageImg = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+                    db.Message.update({
+                        text: req.body.text,
+                        image: messageImg
+                    }, { where: { id: req.params.id } })
+                        .then(() => {
+                            const message = "Le message a bien été modifié";
+                            res.status(200).json({ message })
+                        })
+                        .catch(error => res.status(400).json({ error }));
+                }
+            } else {
+                db.Message.update({
+                    text: req.body.text
+                }, { where: { id: req.params.id } })
+                    .then(() => {
+                        const message = "Le message a bien été modifié";
                         res.status(200).json({ message })
                     })
                     .catch(error => res.status(400).json({ error }));
-            })
+            }
         })
 }
 
@@ -94,16 +118,16 @@ exports.getOneMessage = (req, res, next) => {
             model: db.Comment
         }]
     })
-    .then(message => {
-        if (message) {
-            res.status(200).json(message);
-        } else {
-            res.status(404).json({ error: "Pas de message" });
-        }
-    })
-    .catch(error => {
-        res.status(400).json({ error })
-    });
+        .then(message => {
+            if (message) {
+                res.status(200).json(message);
+            } else {
+                res.status(404).json({ error: "Pas de message" });
+            }
+        })
+        .catch(error => {
+            res.status(400).json({ error })
+        });
 }
 
 

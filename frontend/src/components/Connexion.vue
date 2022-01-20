@@ -226,7 +226,7 @@ form button:hover {
 
 @media (max-width: 640px) {
   section {
-    width: 80%;
+    width: 90%;
   }
   .connectWin {
     flex-direction: column;
