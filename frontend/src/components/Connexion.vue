@@ -163,7 +163,7 @@ export default {
                     timer: 1000,
                     showConfirmButton: false,
                     timerProgressBar: true,
-                    willClose: () => { location.reload() }
+                    willClose: () => { location.href = "/" }
                 })
         })
         .catch(error =>{

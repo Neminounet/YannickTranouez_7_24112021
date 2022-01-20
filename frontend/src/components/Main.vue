@@ -204,6 +204,7 @@ export default {
 }
 
 .post {
+  width: 100%;
   margin-top: 20px;
   background-color: whitesmoke;
   border-radius: 10px;
