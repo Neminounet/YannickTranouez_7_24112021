@@ -1,8 +1,7 @@
 const express = require("express");
-const bcrypt = require("bcrypt")
+const helmet = require("helmet");
 const path = require("path");
 const cors = require('cors');
-const dotenv = require("dotenv").config();
 const db = require('./models');
 const app = express();
 
@@ -11,6 +10,11 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(helmet());
+app.use(function (req, res, next) {
+    res.setHeader('Cross-Origin-Resource-Policy', 'same-site')
+    next()
+  })
 
 // Chemin vers dossier Statique, ici images
 // ============================================================================

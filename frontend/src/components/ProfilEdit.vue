@@ -396,7 +396,7 @@ textarea {
   box-shadow: 0px 10px 20px -7px #000000;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767.9px) {
   .profilEdit {
     width: 90%;
     margin: auto;

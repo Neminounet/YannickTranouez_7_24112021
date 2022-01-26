@@ -262,7 +262,8 @@ export default {
   width: 60%;
   margin: auto;
   background-color: white;
-  padding: 20px;
+  padding:5px 20px;
+  margin-bottom: 30px;
   border-radius: 30px;
   box-shadow: 0px 10px 13px -7px #000000;
 }

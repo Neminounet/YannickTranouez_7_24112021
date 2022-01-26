@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userCtrl = require("../controller/user");
+const limit = require("../middleware/limit");
 
 //  Les Middlewares 
 // ============================================================================
@@ -12,7 +13,7 @@ const auth = require("../middleware/auth");
 // ============================================================================
 
 router.post("/signup", multer, userCtrl.signup);
-router.post("/login", userCtrl.login);
+router.post("/login", limit.limiter, userCtrl.login);
 router.put("/:id", auth, multer, userCtrl.updateUser);
 router.delete("/:id", auth, userCtrl.deleteUser);
 router.get("/:id", auth, userCtrl.getOneUser);
