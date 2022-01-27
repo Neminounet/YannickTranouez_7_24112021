@@ -4,6 +4,8 @@ const path = require("path");
 const cors = require('cors');
 const db = require('./models');
 const app = express();
+const dotenv = require("dotenv").config();
+
 
 // Les Middlewares 
 // ============================================================================

@@ -16,7 +16,8 @@ exports.signup = (req, res, next) => {
                 username: "Admin", 
                 password: hash,
                 email: "admin@admin.com",
-                 admin: true }))
+                avatar: `http://${process.env.HOST}/images/default_user.png`,
+                admin: true }))
             .then(user => console.log(user.toJSON()))
         }
     })
