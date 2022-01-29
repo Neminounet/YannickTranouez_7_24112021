@@ -27,10 +27,10 @@ Dans le terminal du dossier frontend (si à la racine entrer cd frontend) puis :
 
 
 IV) Lancement : 
-1) backend : npm run dev (créera automatiquement les tables uses messages et comments dans la BDD).
+1) backend : npm run dev (créera automatiquement les tables users messages et comments dans la BDD).
 2) frontend : npm run serve
 
-NOTE : L'utilisateur Admin, sera crée dans un même temps que le premier utilisateur, sob MDP est à créer/modifier dans un fichier .env (un fichier .env.sample fournit un exemple de configuration).
+NOTE : L'utilisateur Admin, sera crée dans un même temps que le premier utilisateur, son MDP est à créer/modifier dans un fichier .env (un fichier .env.sample fournit un exemple de configuration).
 
 
 
