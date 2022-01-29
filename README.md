@@ -9,23 +9,25 @@ Technologies utilisées :
 
 Cloner le repository puis ==>
 
+I) Base de donnée : 
+1) !! S'assurer d'avoir installé MySQL et sequelize !!
+2) Dans le terminal (backend) : sequelize db:create (va créer la base de donnée dans MySQL à l'aide des informations contenues dans config.js)
 
-Backend : 
+
+II) Backend : 
 Dans le terminal du dossier backend (si à la racine entrer cd backend) puis :
-
-installer : npm install
-
-lancer : npm run dev
+1) installer : npm install
 
 
-Frontend :
+III) Frontend :
 Dans le terminal du dossier frontend (si à la racine entrer cd frontend) puis :
+1) Installer VueCLi : npm install -g @vue/cli
+2) Installer : npm install
 
-Installer VueCLi : npm install -g @vue/cli
 
-Installer : npm install
-
-Lancer :  npm run serve
+IV) Lancement : 
+1) backend : npm run dev (créera automatiquement les tables uses messages et comments dans la BDD).
+2) frontend : npm run serve
 
 
 
