@@ -17,6 +17,7 @@ I) Base de donnée :
 II) Backend : 
 Dans le terminal du dossier backend (si à la racine entrer cd backend) puis :
 1) installer : npm install
+2) Ne pas oublier de s'appoprier le .env (Modification du mot de passe de l'admin par exemple).
 
 
 III) Frontend :
@@ -29,6 +30,7 @@ IV) Lancement :
 1) backend : npm run dev (créera automatiquement les tables uses messages et comments dans la BDD).
 2) frontend : npm run serve
 
+NOTE : L'utilisateur Admin, sera crée dans un même temps que le premier utilisateur, sob MDP est à créer/modifier dans un fichier .env (un fichier .env.sample fournit un exemple de configuration).
 
 
 
